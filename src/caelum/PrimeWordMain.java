@@ -7,43 +7,32 @@ public class PrimeWordMain {
 
 	public static void main(String[] args) throws FileNotFoundException {
 		FileReader fileReader =  new FileReader("input.txt");
-		BufferedReader reader = new BufferedReader(fileReader);
-
-		//Scanner scanner = new Scanner(System.in);
-		System.out.println("Alo");
+		
+		Scanner scanner = new Scanner(fileReader);
 		String read;
-		int valueRead;
-
-		try {
-			while(reader.readLine() != null){
-				System.out.println("entrei no while");
-				read = reader.readLine();
-				System.out.println("li isso : "+read);
-				valueRead = valueTransform(read);
-				System.out.println("passei pelo value transform e virou isso " + valueRead);
-				isPrime(valueRead);
-				System.out.println("Passei pelo isprime");
-			}
-			reader.close();
-		} catch (IOException e) {
-			
-			e.printStackTrace();
-		}
-
-		//scanner.close();
-	}
-
-	private static void isPrime(int valueRead) {
-		if(valueRead < 2) {	System.out.println("It is not a prime word"); 	}
-		if(valueRead == 2 || valueRead == 3) { System.out.println("It is a prime word");}
-		if(valueRead%2 == 0 || valueRead%3==0 ){ System.out.println("It is not a prime word");}
-		long squareRoot = (long) Math.sqrt(valueRead)+1;
-		for(long i = 6L; i<=squareRoot ;i+=6){
-			if(valueRead%(i-1)==0 || valueRead%(i+1)==0) {
+		int valueRead =0 ;
+		while(scanner.hasNextLine()){
+			read = scanner.nextLine();
+			valueRead = valueTransform(read);
+			if(isPrime(valueRead)){
+				System.out.println("It is a prime word");
+			}else {
 				System.out.println("It is not a prime word");
 			}
+			
+			}
+		scanner.close();
+	}
+
+	private static boolean isPrime(int valueRead) {
+		if(valueRead == 2 || valueRead == 3) { return true;}
+		if(valueRead%2 == 0 || valueRead%3 == 0){ return false;}
+		for(int i = 3; i*i<= valueRead ;i+=2){
+			if(valueRead%i == 0) {
+				return false;
+			}
 		}
-		System.out.println("It is a prime word");
+		return true;
 	}
 
 	private static int valueTransform(String read) {
